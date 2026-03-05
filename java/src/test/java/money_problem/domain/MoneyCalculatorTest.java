@@ -16,7 +16,7 @@ class MoneyCalculatorTest {
         // When 
         double result = MoneyCalculator.add(basedAmount, USD, addedAmount);
         // Then
-        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(15);
     }
 
     @Test
@@ -39,5 +39,49 @@ class MoneyCalculatorTest {
         double result = MoneyCalculator.divide(basedAmount, KRW, divisor);
         // Then
         assertThat(result).isEqualTo(1000.5);
+    }
+
+    @Test
+    void shouldAddInEuros() {
+        // Given
+        var basedAmount = 100;
+        var addedAmount = 50;
+        // When
+        double result = MoneyCalculator.add(basedAmount, EUR, addedAmount);
+        // Then
+        assertThat(result).isEqualTo(150);
+    }
+
+    @Test
+    void shouldAddWithZero() {
+        // Given
+        var basedAmount = 100;
+        var addedAmount = 0;
+        // When
+        double result = MoneyCalculator.add(basedAmount, USD, addedAmount);
+        // Then
+        assertThat(result).isEqualTo(100);
+    }
+
+    @Test
+    void shouldMultiplyInUsd() {
+        // Given
+        var basedAmount = 10;
+        var value = 5;
+        // When
+        double result = MoneyCalculator.times(basedAmount, USD, value);
+        // Then
+        assertThat(result).isEqualTo(50);
+    }
+
+    @Test
+    void shouldDivideInEuros() {
+        // Given
+        var basedAmount = 100;
+        var divisor = 2;
+        // When
+        double result = MoneyCalculator.divide(basedAmount, EUR, divisor);
+        // Then
+        assertThat(result).isEqualTo(50);
     }
 }
