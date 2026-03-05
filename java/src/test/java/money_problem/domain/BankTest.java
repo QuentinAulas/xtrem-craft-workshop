@@ -37,19 +37,30 @@ class BankTest {
         Money result = bank.convert(new Money(EUR, 10), EUR);
 
         // Then
+<<<<<<< HEAD
         assertThat(result.amount()).isEqualTo(10);
         assertThat(result.currency()).isEqualTo(EUR);
+=======
+        assertThat(convertResult).isEqualTo(10);
+>>>>>>> 6a1eb29 (tests)
     }
 
     @Test
     void convert_throws_exception_on_missing_exchange_rate() {
         // Given
+<<<<<<< HEAD
         Bank bank = builtBank()
                 .withExchangeRate(EUR, USD, 1.2)
                 .build();
 
         // When & Then
         assertThatThrownBy(() -> bank.convert(new Money(EUR, 10), KRW))
+=======
+        var from = EUR;
+        var to = KRW;
+        // When & Then
+        assertThatThrownBy(() -> Bank.withExchangeRate(from, to, 1.2).convert(10, from, to))
+>>>>>>> 6a1eb29 (tests)
                 .isInstanceOf(MissingExchangeRateException.class)
                 .hasMessage("EUR->KRW");
         
