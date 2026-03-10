@@ -3,10 +3,6 @@ name: Java CI with Maven
 on:
   push:
     branches: [ "master", "main" ]
-    paths:
-      - 'java/src/**'       
-      - 'docs/**'
-      - 'java/pom.xml'   
   pull_request:
     branches: [ "master", "main" ]
 
@@ -26,4 +22,4 @@ jobs:
 
     - name: Build and Test with Maven
       working-directory: ./java
-      run: mvn -B test --file pom.xml
+      run: mvn -B test
