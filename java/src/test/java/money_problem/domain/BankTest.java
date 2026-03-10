@@ -52,6 +52,7 @@ class BankTest {
         assertThatThrownBy(() -> bank.convert(new Money(EUR, 10), KRW))
                 .isInstanceOf(MissingExchangeRateException.class)
                 .hasMessage("EUR->KRW");
+        
     }
 
     @Test
@@ -101,5 +102,30 @@ class BankTest {
 
         // Then
         assertThat(result.amount()).isEqualTo(12.5);
+    }
+
+    @Test
+    void convert_with_fractional_exchange_rate() throws MissingExchangeRateException {
+        // Given
+        var from = EUR;
+        var to = USD;
+        Bank bank = Bank.withExchangeRate(from, to, 1.25);
+        // When 
+        double convertResult = bank.convert(10, from, to);
+        // Then
+        assertThat(convertResult)
+                .isEqualTo(12.5);
+    }
+
+    @Test
+    void missing_exchange_rate_from_known_currency_to_unknown() {
+        // Given
+        var from = EUR;
+        var to = KRW;
+        Bank bank = Bank.withExchangeRate(from, USD, 1.2);
+        // When & Then
+        assertThatThrownBy(() -> bank.convert(10, from, to))
+                .isInstanceOf(MissingExchangeRateException.class)
+                .hasMessage("EUR->KRW");
     }
 }
