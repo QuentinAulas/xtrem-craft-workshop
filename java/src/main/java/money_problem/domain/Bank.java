@@ -10,24 +10,24 @@ public final class Bank {
         this.exchangeRates = exchangeRates;
     }
 
-    public static Bank withExchangeRate(Currency currency1, Currency currency2, double rate) {
+    public static Bank withExchangeRate(Currency from, Currency to, double rate) {
         var bank = new Bank(new HashMap<>());
-        bank.addExchangeRate(currency1, currency2, rate);
+        bank.addExchangeRate(from, to, rate);
 
         return bank;
     }
 
-    public void addExchangeRate(Currency currency1, Currency currency2, double rate) {
-        exchangeRates.put(currency1 + "->" + currency2, rate);
+    public void addExchangeRate(Currency from, Currency to, double rate) {
+        exchangeRates.put(from + "->" + to, rate);
     }
 
-    public double convert(double amount, Currency currency1, Currency currency2) throws MissingExchangeRateException {
-        if (!(currency1 == currency2 || exchangeRates.containsKey(currency1 + "->" + currency2))) {
-            throw new MissingExchangeRateException(currency1, currency2);
+    public double convert(double amount, Currency from, Currency to) throws MissingExchangeRateException {
+        if (!(from == to || exchangeRates.containsKey(from + "->" + to))) {
+            throw new MissingExchangeRateException(from, to);
         }
-        return currency1 == currency2
+        return from == to
                 ? amount
-                : amount * exchangeRates.get(currency1 + "->" + currency2);
+                : amount * exchangeRates.get(from + "->" + to);
     }
 
 }
