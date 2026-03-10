@@ -4,9 +4,9 @@ on:
   push:
     branches: [ "master", "main" ]
     paths:
-      - 'java/**'       
+      - 'java/src/**'       
       - 'docs/**'
-      - 'pom.xml'   
+      - 'java/pom.xml'   
   pull_request:
     branches: [ "master", "main" ]
 
@@ -25,4 +25,5 @@ jobs:
         cache: maven
 
     - name: Build and Test with Maven
+      working-directory: ./java
       run: mvn -B test --file pom.xml
