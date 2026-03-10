@@ -18,7 +18,7 @@ class BankTest {
         // When 
         double convertResult = Bank.withExchangeRate(from, to, 1.2).convert(10, from, to);
         // Then
-        assertThat(convertResult).isEqualTo(2);
+        assertThat(convertResult).isEqualTo(12);
     }
 
     @Test
