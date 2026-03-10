@@ -1,15 +1,16 @@
 package money_problem.domain;
 
 public class MoneyCalculator {
-    public static double add(double amount, Currency currency, double amount2) {
-        return amount + amount2;
+    
+    public static double add(double basedAmount, Currency currency, double addedAmount) {
+        return basedAmount + addedAmount;
     }
 
-    public static double times(double amount, Currency currency, int value) {
-        return amount * value;
+    public static double times(double basedAmount, Currency currency, int value) {
+        return basedAmount * value;
     }
 
-    public static double divide(double amount, Currency currency, int value) {
-        return amount / value;
+    public static double divide(double basedAmount, Currency currency, int value) {
+        return basedAmount / value;
     }
 }
