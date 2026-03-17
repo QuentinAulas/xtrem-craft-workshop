@@ -11,26 +11,28 @@ import static money_problem.domain.Currency.USD;
 class BankTest {
 
     @Test
-    void convert_eur_to_usd_returns_double() throws MissingExchangeRateException {
+    void convert_eur_to_usd_returns_money() throws MissingExchangeRateException {
         // Given
         var from = EUR;
         var to = USD;
         // When 
-        double convertResult = Bank.withExchangeRate(from, to, 1.2).convert(10, from, to);
+        Money result = Bank.withExchangeRate(from, to, 1.2).convert(new Money(from, 10), to);
+        
         // Then
-        assertThat(convertResult).isEqualTo(12);
+        assertThat(result.amount()).isEqualTo(12);
+        assertThat(result.currency()).isEqualTo(to);
     }
 
     @Test
     void convert_eur_to_eur_returns_same_value() throws MissingExchangeRateException {
         // Given
         var from = EUR;
-        var to = EUR;
         // When 
-        double convertResult = Bank.withExchangeRate(from, to, 1.0).convert(10, from, to);
+        Money result = Bank.withExchangeRate(from, USD, 1.2).convert(new Money(from, 10), from);
+        
         // Then
-        assertThat(convertResult)
-                .isEqualTo(10);
+        assertThat(result.amount()).isEqualTo(10);
+        assertThat(result.currency()).isEqualTo(from);
     }
 
     @Test
@@ -39,26 +41,26 @@ class BankTest {
         var from = EUR;
         var to = KRW;
         Bank bank = Bank.withExchangeRate(from, USD, 1.2);
+        
         // When & Then
-        assertThatThrownBy(() -> bank.convert(10, from, to))
+        assertThatThrownBy(() -> bank.convert(new Money(from, 10), to))
                 .isInstanceOf(MissingExchangeRateException.class)
                 .hasMessage("EUR->KRW");
-        
     }
 
     @Test
-    void convert_with_different_exchange_rates_returns_different_floats() throws MissingExchangeRateException {
+    void convert_with_different_exchange_rates_returns_different_amounts() throws MissingExchangeRateException {
         // Given
         var from = EUR;
         var to = USD;
+        
         // When 
-        double convertResult = Bank.withExchangeRate(from, to, 1.2).convert(10, from, to);
-        double convertResult2 = Bank.withExchangeRate(from, to, 1.3).convert(10, from, to);
+        Money result1 = Bank.withExchangeRate(from, to, 1.2).convert(new Money(from, 10), to);
+        Money result2 = Bank.withExchangeRate(from, to, 1.3).convert(new Money(from, 10), to);
+        
         // Then
-        assertThat(convertResult)
-                .isEqualTo(12);
-        assertThat(convertResult2)
-                .isEqualTo(13);
+        assertThat(result1.amount()).isEqualTo(12);
+        assertThat(result2.amount()).isEqualTo(13);
     }
 
     @Test
@@ -68,11 +70,12 @@ class BankTest {
         var to = USD;
         Bank bank = Bank.withExchangeRate(from, to, 1.2);
         bank.addExchangeRate(from, to, 1.3);
+        
         // When 
-        double convertResult = bank.convert(10, from, to);
+        Money result = bank.convert(new Money(from, 10), to);
+        
         // Then
-        assertThat(convertResult)
-                .isEqualTo(13);
+        assertThat(result.amount()).isEqualTo(13);
     }
 
     @Test
@@ -81,22 +84,11 @@ class BankTest {
         var from = EUR;
         var to = USD;
         Bank bank = Bank.withExchangeRate(from, to, 1.25);
+        
         // When 
-        double convertResult = bank.convert(10, from, to);
+        Money result = bank.convert(new Money(from, 10), to);
+        
         // Then
-        assertThat(convertResult)
-                .isEqualTo(12.5);
-    }
-
-    @Test
-    void missing_exchange_rate_from_known_currency_to_unknown() {
-        // Given
-        var from = EUR;
-        var to = KRW;
-        Bank bank = Bank.withExchangeRate(from, USD, 1.2);
-        // When & Then
-        assertThatThrownBy(() -> bank.convert(10, from, to))
-                .isInstanceOf(MissingExchangeRateException.class)
-                .hasMessage("EUR->KRW");
+        assertThat(result.amount()).isEqualTo(12.5);
     }
 }

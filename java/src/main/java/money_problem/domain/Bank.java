@@ -20,14 +20,22 @@ public final class Bank {
     public void addExchangeRate(Currency from, Currency to, double rate) {
         exchangeRates.put(from + "->" + to, rate);
     }
+    
+    private double convertAmount(double amount, Currency from, Currency to) throws MissingExchangeRateException {
+        if (from == to) {
+            return amount;
+        }
 
-    public double convert(double amount, Currency from, Currency to) throws MissingExchangeRateException {
-        if (!(from == to || exchangeRates.containsKey(from + "->" + to))) {
+        String key = from + "->" + to;
+        if (!exchangeRates.containsKey(key)) {
             throw new MissingExchangeRateException(from, to);
         }
-        return from == to
-                ? amount
-                : amount * exchangeRates.get(from + "->" + to);
+
+        return amount * exchangeRates.get(key);
+    }
+
+    public Money convert(Money money, Currency to) throws MissingExchangeRateException {
+        return new Money(to, convertAmount(money.amount(), money.currency(), to));
     }
 
 }
