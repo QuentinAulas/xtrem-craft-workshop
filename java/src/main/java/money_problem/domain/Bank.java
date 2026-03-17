@@ -11,9 +11,7 @@ public final class Bank {
     }
 
     public static Bank withExchangeRate(Currency from, Currency to, double rate) {
-    public static Bank withExchangeRate(Currency from, Currency to, double rate) {
         var bank = new Bank(new HashMap<>());
-        bank.addExchangeRate(from, to, rate);
         bank.addExchangeRate(from, to, rate);
 
         return bank;
@@ -21,12 +19,10 @@ public final class Bank {
 
     public void addExchangeRate(Currency from, Currency to, double rate) {
         exchangeRates.put(from + "->" + to, rate);
-    public void addExchangeRate(Currency from, Currency to, double rate) {
-        exchangeRates.put(from + "->" + to, rate);
     }
     
     private double convertAmount(double amount, Currency from, Currency to) throws MissingExchangeRateException {
-        if (from == to) {   
+        if (from == to) {
             return amount;
         }
 
