@@ -105,6 +105,19 @@ class BankTest {
     }
 
     @Test
+    void convert_with_fractional_exchange_rate() throws MissingExchangeRateException {
+        // Given
+        var from = EUR;
+        var to = USD;
+        Bank bank = Bank.withExchangeRate(from, to, 1.25);
+        // When 
+        double convertResult = bank.convert(10, from, to);
+        // Then
+        assertThat(convertResult)
+                .isEqualTo(12.5);
+    }
+
+    @Test
     void missing_exchange_rate_from_known_currency_to_unknown() {
         // Given
         var from = EUR;
