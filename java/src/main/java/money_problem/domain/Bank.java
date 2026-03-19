@@ -22,7 +22,7 @@ public final class Bank {
     }
     
     private double convertAmount(double amount, Currency from, Currency to) throws MissingExchangeRateException {
-        if (from == to) {
+        if (from == to) {   
             return amount;
         }
 
