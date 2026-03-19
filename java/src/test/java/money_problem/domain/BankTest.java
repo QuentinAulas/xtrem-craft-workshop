@@ -22,8 +22,12 @@ class BankTest {
         Money result = bank.convert(new Money(EUR, 10), USD);
 
         // Then
+<<<<<<< HEAD
         assertThat(result.amount()).isEqualTo(12);
         assertThat(result.currency()).isEqualTo(USD);
+=======
+        assertThat(convertResult).isEqualTo(2);
+>>>>>>> 435243f (push avec test cassé)
     }
 
     @Test
