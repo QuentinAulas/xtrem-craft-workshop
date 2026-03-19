@@ -19,7 +19,6 @@ public final class Bank {
 
     public void addExchangeRate(Currency from, Currency to, double rate) {
         exchangeRates.put(from + "->" + to, rate);
-<<<<<<< HEAD
     }
     
     private double convertAmount(double amount, Currency from, Currency to) throws MissingExchangeRateException {
@@ -37,17 +36,6 @@ public final class Bank {
 
     public Money convert(Money money, Currency to) throws MissingExchangeRateException {
         return new Money(to, convertAmount(money.amount(), money.currency(), to));
-=======
-    }
-
-    public double convert(double amount, Currency from, Currency to) throws MissingExchangeRateException {
-        if (!(from == to || exchangeRates.containsKey(from + "->" + to))) {
-            throw new MissingExchangeRateException(from, to);
-        }
-        return from == to
-                ? amount
-                : amount * exchangeRates.get(from + "->" + to);
->>>>>>> 0b5b8bb (Portfolio et + encore)
     }
 
 }
