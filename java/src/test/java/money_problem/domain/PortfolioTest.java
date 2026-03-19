@@ -1,5 +1,6 @@
 package money_problem.domain;
 
+import static money_problem.domain.BankBuilder.builtBank;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,9 @@ public class PortfolioTest {
     void testEmptyPortfolio() throws MissingExchangeRateException {
         // Given
         Portfolio portfolio = new Portfolio();
-        Bank bank = Bank.withExchangeRate(Currency.EUR, Currency.USD, 1.2);
-        
+        Bank bank = builtBank()
+                .withExchangeRate(Currency.EUR, Currency.USD, 1.2)
+                .build();
         // When
         double value = portfolio.evaluate(bank, Currency.EUR);
         

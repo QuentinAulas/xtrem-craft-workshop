@@ -13,15 +13,25 @@ public class Portfolio {
         double eval = 0.0;
         for (Currency currency : moneys.keySet()){
             if (moneys.get(currency) != 0) {
+<<<<<<< HEAD
                 eval += bank.convert(new Money(currency, moneys.get(currency)), toCurrency).amount();
+=======
+                eval += bank.convert(moneys.get(currency), currency, toCurrency);
+>>>>>>> 0b5b8bb (Portfolio et + encore)
             }
         }
         return eval;
     }
 
+<<<<<<< HEAD
     public void add(Money money) {
 
         this.moneys.put(money.currency(), money.amount());
+=======
+    public void add(double amount, Currency currency) {
+
+        this.moneys.put(currency, amount);
+>>>>>>> 0b5b8bb (Portfolio et + encore)
     }
 
     public Map<Currency, Double> getDetails() {
