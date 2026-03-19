@@ -19,9 +19,9 @@ public class Portfolio {
         return eval;
     }
 
-    public void add(double amount, Currency currency) {
+    public void add(Money money) {
 
-        this.moneys.put(currency, amount);
+        this.moneys.put(money.currency(), money.amount());
     }
 
     public Map<Currency, Double> getDetails() {
