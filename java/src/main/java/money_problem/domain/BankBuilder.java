@@ -5,7 +5,7 @@ public class BankBuilder {
     private Currency toCurrency = Currency.USD;
     private double rate = 1.0;
 
-    public static BankBuilder builtBank() {
+    public static BankBuilder aBank() {
         return new BankBuilder();
     }
 
